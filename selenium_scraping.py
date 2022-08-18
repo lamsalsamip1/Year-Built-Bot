@@ -1,9 +1,18 @@
 import os
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-os.environ['PATH'] += r"C:/Selenium drivers"
+#os.environ['PATH'] += r"/Selenium drivers"
+
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.dirname(__file__)
+    return os.path.join(base_path, relative_path)
 
 
 def initDriver():
@@ -11,7 +20,8 @@ def initDriver():
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     # options.headless = True
     global driver
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(resource_path(
+        './driver/chromedriver.exe'), options=options)
 
 
 def neighbour_construction(state, street, city, buildingNum, direction, dir_status):

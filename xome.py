@@ -4,10 +4,11 @@ import requests
 
 def xomeConstruction(state, city, street, buildingNum, zip):
 
+    requests.packages.urllib3.disable_warnings()
     final_url = 0
     cityURL = '-'.join(map(str, city))
     url = f"https://www.xome.com/realestate/{state}/{cityURL}/{zip}/StreetList/"
-    html_text = requests.get(url).text
+    html_text = requests.get(url, verify=False).text
     soup = BeautifulSoup(html_text, 'html.parser')
 
     table = soup.find('table', id="Master_dlStreet")
@@ -22,7 +23,7 @@ def xomeConstruction(state, city, street, buildingNum, zip):
             break
 
     if (new_url):
-        html_text = requests.get(new_url).text
+        html_text = requests.get(new_url, verify=False).text
         soup = BeautifulSoup(html_text, 'html.parser')
         new_table = soup.find('table', id="Master_Properties")
         new_table.find_all('tr')
@@ -34,7 +35,7 @@ def xomeConstruction(state, city, street, buildingNum, zip):
                 break
 
     if final_url != 0:
-        html_text = requests.get(final_url).text
+        html_text = requests.get(final_url, verify=False).text
         soup = BeautifulSoup(html_text, 'html.parser')
         cards = soup.find_all('div', class_="detail-item")
         for card in cards:

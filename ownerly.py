@@ -4,6 +4,7 @@ import requests
 
 def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status):
 
+    requests.packages.urllib3.disable_warnings()
     cityURL = '-'.join(map(str, city))
     streetURL = '-'.join(map(str, street))
     url = f"https://www.ownerly.com/{state}/{cityURL}/{streetURL}-home-details".lower()
@@ -12,7 +13,7 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
     while True:
         i = i+1
         new_url = f"{url}{page}"
-        html_text = requests.get(new_url).text
+        html_text = requests.get(new_url, verify=False).text
         soup = BeautifulSoup(html_text, 'html.parser')
 
         if dir_status == 1:
