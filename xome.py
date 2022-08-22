@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def xomeConstruction(state, city, street, buildingNum, zip, original_address):
+def xomeConstruction(state, city, street, buildingNum, zip, original_address, dir_status, direction):
 
     requests.packages.urllib3.disable_warnings()
 
@@ -34,6 +34,11 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address):
             new_url = f"https://www.xome.com/{item['href']}"
             break
 
+    if dir_status == 1:
+        compare_text1 = f"{buildingNum} {direction[0]} {' '.join(map(str,street))} {' '.join(map(str,city))} {state} {zip}"
+        compare_text2 = f"{buildingNum} {' '.join(map(str,street))} {direction[0]} {' '.join(map(str,city))} {state} {zip}"
+    else:
+        compare_text1 = compare_text2 = original_address.upper()
     if (new_url != 0):
 
         html_text = requests.get(new_url, verify=False).text
@@ -45,7 +50,7 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address):
         search_table = new_table.find_all('td')
         for item in search_table:
 
-            if (item.text[1:-1].upper() == original_address.upper()):
+            if (item.text[1:-1].upper() == compare_text1 or item.text[1:-1].upper() == compare_text2):
                 status = 1
                 final_url = f"https://www.xome.com/{item.find('a')['href']}"
                 break
