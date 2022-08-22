@@ -6,8 +6,11 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
 
     requests.packages.urllib3.disable_warnings()
     cityURL = '-'.join(map(str, city))
+
     streetURL = '-'.join(map(str, street))
+
     url = f"https://www.ownerly.com/{state}/{cityURL}/{streetURL}-home-details".lower()
+
     i = 1
     page = ""
     while True:
@@ -17,11 +20,15 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
         soup = BeautifulSoup(html_text, 'html.parser')
 
         if dir_status == 1:
-            compare = f"{buildingNum} {' '.join(map(str,street))} {direction[0]}"
+            compare_1 = f"{buildingNum} {' '.join(map(str,street))} {direction[0]}"
+            compare_2 = f"{buildingNum} {direction[0]} {' '.join(map(str,street))}"
         else:
-            compare = f"{buildingNum} {' '.join(map(str,street))}"
+            compare_1 = f"{buildingNum} {' '.join(map(str,street))}"
+            compare_2 = compare_1
+
         all_containers = soup.find_all('div', class_="card-container")
-        result_code = check_year_construction(all_containers, compare)
+        result_code = check_year_construction(
+            all_containers, compare_1, compare_2)
         status = 0
         if result_code == 0:
             arrows = soup.find_all('span', class_="pagination-arrow")
@@ -49,7 +56,7 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
             break
 
 
-def check_year_construction(all_cards, compare_text):
+def check_year_construction(all_cards, compare_text_1, compare_text_2):
 
     for item in all_cards:
         item_card = (item.find('p', class_="card-street-address").text.lower())
@@ -59,7 +66,7 @@ def check_year_construction(all_cards, compare_text):
         else:
             compare_card = item_card
 
-        if compare_text.upper() == compare_card.upper():
+        if compare_text_1.upper() == compare_card.upper() or compare_text_2.upper() == compare_card.upper():
             item_card_features = item.find_all('p')
 
             for feature in item_card_features:
