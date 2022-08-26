@@ -8,7 +8,8 @@ def init():
     print("\n\tYEAR BUILT BOT")
     print("-----------------------------------------------------------------------\n")
     input_address = input('Enter the address :').upper().replace(",", "")
-    addressList = input_address.split(" ")
+    addressList = input_address.split()
+
     if (addressList[-1] == "STATES" and addressList[-2] == "UNITED"):
         addressList.remove("STATES")
         addressList.remove("UNITED")

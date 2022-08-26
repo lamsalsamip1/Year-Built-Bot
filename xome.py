@@ -45,8 +45,11 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
         soup = BeautifulSoup(html_text, 'html.parser')
 
         new_table = soup.find('table', id="Master_Properties")
-
+        if new_table == None:
+            print("XOME:Not found")
+            return
         new_table.find_all('tr')
+
         search_table = new_table.find_all('td')
         for item in search_table:
 
