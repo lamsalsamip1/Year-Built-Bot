@@ -13,7 +13,7 @@ def search_table(url, compare_text1, compare_text2):
 
         new_table = soup.find('table', id="Master_Properties")
         if new_table == None:
-            print("XOME:Not found")
+            print("XOME\t\t: Not found")
             return [0, 0]
         new_table.find_all('tr')
 
@@ -41,7 +41,7 @@ def find_year(url):
             year_const = card.find(
                 'div', class_='col detail-value').text
             if year_const == "" or year_const == 0:
-                year_const = "Not found"
+                year_const = " Not found"
 
             return year_const
     return 0
@@ -63,11 +63,11 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
 
     check_single = find_year(url)
     if (check_single != 0):
-        print(f"XOME:{check_single}")
+        print(f"XOME\t\t:{check_single}")
         return
     table = soup.find('table', id="Master_dlStreet")
     if (table == None):
-        print("XOME:Not found")
+        print("XOME\t\t: Not found")
         return
 
     streetList = table.find_all('a')
@@ -83,7 +83,7 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
 
     check_single = find_year(new_url)
     if (check_single != 0):
-        print(f"XOME:{check_single}")
+        print(f"XOME\t\t:{check_single}")
         return
 
     if dir_status == 1:
@@ -120,14 +120,14 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
                     break
 
     if final_url == 0:
-        print("XOME:Not found")
+        print("XOME\t\t: Not found")
         return
     else:
 
         result = find_year(final_url)
         if (result != 0):
             print(
-                f"XOME: {result}")
+                f"XOME\t\t: {result}")
         else:
-            print("XOME: Not found ")
+            print("XOME\t\t: Not found")
             return

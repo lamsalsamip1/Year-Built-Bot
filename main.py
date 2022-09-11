@@ -44,6 +44,7 @@ def init():
     city = addressList[-3-(cityCount-1):-2]
 
     print("-----------------------------------------------------------------------\n")
+    
     ownerlyConstruction(state, city, street, buildingNum,
                         direction, dir_status)
     neighbour_construction(state, street, city,
@@ -58,5 +59,6 @@ def init():
 
 
 while True:
+
     init()
     print("-----------------------------------------------------------------------\n")

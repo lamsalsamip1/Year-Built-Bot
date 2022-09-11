@@ -3,7 +3,7 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
+from chromeVersion import get_chrome_version
 # os.environ['PATH'] += r"/Selenium drivers"
 
 
@@ -19,9 +19,11 @@ def initDriver():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     # options.headless = True
+    ver = get_chrome_version()
+    driver_url = f"./driver/{ver[0:3]}.exe"
     global driver
     driver = webdriver.Chrome(resource_path(
-        './driver/chromedriver.exe'), options=options)
+        driver_url), options=options)
 
 
 def create_url():
@@ -52,7 +54,7 @@ def neighbour_construction(state, street, city, buildingNum, direction, dir_stat
                     for new_item in new_list:
                         if "Built in" in new_item:
                             value = new_item[9:]
-                            print(f"NEIGHBOURWHO: {value}")
+                            print(f"NEIGHBOURWHO\t: {value}")
 
                             return
 
@@ -63,7 +65,7 @@ def neighbour_construction(state, street, city, buildingNum, direction, dir_stat
         else:
             break
 
-    print("NEIGHBOURWHO: Not found")
+    print("NEIGHBOURWHO\t: Not found")
     return
 
 
@@ -75,7 +77,7 @@ def spokeo_connect():
             if item == "YEAR BUILT":
                 index = property_list.index(item)
                 year_constructed_spokeo = property_list[index+1]
-                print(f"SPOKEO: {year_constructed_spokeo}")
+                print(f"SPOEKO\t\t: {year_constructed_spokeo}")
                 driver.quit()
                 return 1
     return 0
@@ -107,7 +109,7 @@ def spokeo_construction(state, street, city, buildingNum, direction, dir_status)
     if (spokeo_connect() == 1):
         return
     else:
-        print("SPOKEO: Not found")
+        print("SPOEKO\t\t: Not found")
         driver.quit()
 
 
@@ -140,7 +142,7 @@ def been_verified(state, street, city, buildingNum, direction, dir_status):
                     for new_item in item_contents:
                         if "Year Built" in new_item:
                             year_built = new_item[-4:]
-                            print(f"BEEN VERIFIED : {year_built}")
+                            print(f"BEEN VERIFIED\t: {year_built}")
                             driver.quit()
                             return
         next = driver.find_elements(By.CLASS_NAME, 'page-link')
@@ -158,6 +160,6 @@ def been_verified(state, street, city, buildingNum, direction, dir_status):
         else:
             break
 
-    print("BEEN VERIFIED : NOT FOUND")
+    print("BEEN VERIFIED\t: Not found")
     driver.quit()
     return

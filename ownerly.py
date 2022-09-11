@@ -41,16 +41,17 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
                             status = 1
                             break
             else:
-                print("OWNERLY NOT FOUND")
+                print("OWNERLY\t\t: Not found")
                 return
             if status == 1:
                 continue
             else:
-                print("OWNERLY NOT FOUND")
+                print("OWNERLY\t\t: Not found")
                 return
 
         elif result_code == 1:
-            print("OWNERLY: (Error): No construction data available\n")
+            # No condstruction data
+            print("OWNERLY\t\t: Not found\n")
             break
         elif result_code == 2:
             break
@@ -73,7 +74,7 @@ def check_year_construction(all_cards, compare_text_1, compare_text_2):
                 if ("Year Constructed: " in feature):
                     year_constructed = feature.find(
                         'span', class_="is-pulled-right").text
-                    print("\nOWNERLY: "+year_constructed)
+                    print("\nOWNERLY\t\t: "+year_constructed)
                     return 2
             return 1
     return 0
