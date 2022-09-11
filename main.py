@@ -14,6 +14,8 @@ def init():
         addressList.remove("STATES")
         addressList.remove("UNITED")
 
+    if addressList[-1] == "USA":
+        addressList.remove("USA")
     original_list = input_address[:]
     direction = ["", ""]
     cityInput = input('Enter city name:').upper().split(" ")
