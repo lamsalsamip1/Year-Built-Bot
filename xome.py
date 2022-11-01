@@ -41,7 +41,7 @@ def find_year(url):
             year_const = card.find(
                 'div', class_='col detail-value').text
             if year_const == "" or year_const == 0:
-                year_const = " Not found"
+                year_const = "Not found"
 
             return year_const
     return 0
@@ -63,7 +63,7 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
 
     check_single = find_year(url)
     if (check_single != 0):
-        print(f"XOME\t\t:{check_single}")
+        print(f"XOME\t\t: {check_single}")
         return
     table = soup.find('table', id="Master_dlStreet")
     if (table == None):
@@ -102,6 +102,7 @@ def xomeConstruction(state, city, street, buildingNum, zip, original_address, di
         soup = BeautifulSoup(html_text, 'html.parser')
         next_page = soup.find('a', class_="next-page-icon")
         if type(next_page) == NoneType:
+            print("XOME\t\t: Not found")
             return
         else:
             while len(next_page) != 0:

@@ -1,4 +1,3 @@
-from audioop import add
 from selenium_scraping import neighbour_construction, spokeo_construction, been_verified
 from ownerly import ownerlyConstruction
 from xome import xomeConstruction
@@ -44,21 +43,45 @@ def init():
     city = addressList[-3-(cityCount-1):-2]
 
     print("-----------------------------------------------------------------------\n")
-    
-    ownerlyConstruction(state, city, street, buildingNum,
-                        direction, dir_status)
-    neighbour_construction(state, street, city,
-                           buildingNum, direction, dir_status)
-    spokeo_construction(state, street, city, buildingNum,
-                        direction, dir_status)
-    been_verified(state, street, city, buildingNum,
-                  direction, dir_status)
-    xomeConstruction(state, city, street, buildingNum,
+
+    try:
+        ownerlyConstruction(state, city, street, buildingNum,
+                            direction, dir_status)
+    except:
+        print("OWNERLY: ERROR")
+    try:
+        neighbour_construction(state, street, city,
+                               buildingNum, direction, dir_status)
+    except:
+        print("NEIGHBOUR WHO: ERROR")
+
+    try:
+        spokeo_construction(state, street, city, buildingNum,
+                            direction, dir_status)
+    except:
+        print("SPOKEO: ERROR")
+
+    try:
+        been_verified(state, street, city, buildingNum,
+                      direction, dir_status)
+    except:
+        print("BEEN VERIFIED: ERROR")
+
+    try:
+        xomeConstruction(state, city, street, buildingNum,
                      zip, original_list, dir_status, direction)
+    except:
+        print("XOME: ERROR")
+
+   
     print("\n-----------------------------------------------------------------------\n")
 
 
 while True:
-
     init()
+
     print("-----------------------------------------------------------------------\n")
+    # choice = input("Enter Y to check another address, N to exit: ")
+    # if (choice == 'N'):
+    #     break
+    # print("-----------------------------------------------------------------------\n")

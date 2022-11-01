@@ -3,7 +3,7 @@ import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from chromeVersion import get_chrome_version
+#from chromeVersion import get_chrome_version
 # os.environ['PATH'] += r"/Selenium drivers"
 
 
@@ -19,15 +19,12 @@ def initDriver():
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     # options.headless = True
-    ver = get_chrome_version()
-    driver_url = f"./driver/{ver[0:3]}.exe"
+    #ver = get_chrome_version()
+    #driver_url = f"./driver/{ver[0:3]}.exe"
+    driver_url = f"./chromedriver.exe"
     global driver
     driver = webdriver.Chrome(resource_path(
         driver_url), options=options)
-
-
-def create_url():
-    pass
 
 
 def neighbour_construction(state, street, city, buildingNum, direction, dir_status):

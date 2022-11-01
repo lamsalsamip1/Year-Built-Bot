@@ -51,7 +51,7 @@ def ownerlyConstruction(state, city, street, buildingNum, direction, dir_status)
 
         elif result_code == 1:
             # No condstruction data
-            print("OWNERLY\t\t: Not found\n")
+            print("OWNERLY\t\t: Not found")
             break
         elif result_code == 2:
             break
